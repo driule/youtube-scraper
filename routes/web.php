@@ -19,4 +19,4 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('scrape/{channel}', 'ScraperController@scrape');
+$router->get('scrape', 'ScraperController@scrape');
