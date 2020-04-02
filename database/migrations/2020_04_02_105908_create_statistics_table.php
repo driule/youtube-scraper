@@ -16,7 +16,7 @@ class CreateStatisticsTable extends Migration
         Schema::create('statistics', function (Blueprint $table) {
             $table->id();
 
-            $table->string('video_id', 100);
+            $table->unsignedBigInteger('video_id');
             $table->foreign('video_id')->references('id')->on('videos');
 
             $table->unsignedBigInteger('views');

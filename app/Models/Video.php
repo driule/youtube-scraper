@@ -6,19 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model
 {
-    protected $fillable = ['id', 'channel_id', 'title', 'description', 'published_at'];
+    protected $fillable = ['id', 'video_id', 'channel_id', 'title', 'description', 'published_at'];
 
-    public function getChannel()
+    public function channel()
     {
         return $this->hasOne('App\Models\Channel');
     }
 
-    public function getTags()
+    public function tags()
     {
-        return $this->hasMany('App\Models\Tag');
+        return $this->belongsToMany('App\Models\Tag', 'videos_tags', 'video_id', 'tag_id');
     }
 
-    public function getStatistics()
+    public function statistics()
     {
         return $this->hasMany('App\Models\Statistic');
     }

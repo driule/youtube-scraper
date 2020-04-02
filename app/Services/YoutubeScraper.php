@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Channel;
+use App\Models\Statistic;
+use App\Models\Tag;
 use App\Models\Video;
 
 class YoutubeScraper
@@ -12,11 +14,15 @@ class YoutubeScraper
 
     private Channel $channel;
     private Video $video;
+    private Statistic $statistic;
+    private Tag $tag;
 
-    public function __construct(Channel $channel, Video $video)
+    public function __construct(Channel $channel, Video $video, Statistic $statistic, Tag $tag)
     {
         $this->channel = $channel;
         $this->video = $video;
+        $this->statistic = $statistic;
+        $this->tag = $tag;
     }
 
     /**
@@ -96,17 +102,51 @@ class YoutubeScraper
     public function saveVideos(array $videoContent)
     {
         foreach ($videoContent['items'] as $item) {
-            $video = $this->video->find($item['id']);
+            $video = $this->video->where('video_id', $item['id'])->first();
             if (!$video) {
-                $this->video->create(
+                $video = $this->video->create(
                     [
-                        'id' => $item['id'],
+                        'video_id' => $item['id'],
                         'channel_id' => $item['snippet']['channelId'],
                         'title' => $item['snippet']['title'],
                         'description' => $item['snippet']['description'],
                     ]
                 );
             }
+
+            if (isset($item['snippet']['tags'])) {
+                $this->saveTags($video, $item['snippet']['tags']);
+            }
+
+            if (isset($item['statistics'])) {
+                $this->saveStatistics($video->id, $item['statistics']);
+            }
+        }
+    }
+
+    private function saveStatistics(string $videoId, array $statistics)
+    {
+        $this->statistic->create(
+            [
+                'video_id' => $videoId,
+                'views' => $statistics['viewCount'],
+                'likes' => $statistics['likeCount'],
+                'dislikes' => $statistics['dislikeCount'],
+                'favorites' => $statistics['favoriteCount'],
+                'comments' => $statistics['commentCount'],
+            ]
+        );
+    }
+
+    private function saveTags(Video $video, array $tags)
+    {
+        foreach ($tags as $name) {
+            $tag = $this->tag->where('name', $name)->first();
+
+            if (!$tag) {
+                $tag = $this->tag->create(['name' => $name]);
+            }
+            $video->tags()->syncWithoutDetaching($tag);
         }
     }
 }

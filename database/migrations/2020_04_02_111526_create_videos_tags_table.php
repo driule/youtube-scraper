@@ -16,13 +16,11 @@ class CreateVideosTagsTable extends Migration
         Schema::create('videos_tags', function (Blueprint $table) {
             $table->id();
 
-            $table->string('video_id', 100);
+            $table->unsignedBigInteger('video_id');
             $table->foreign('video_id')->references('id')->on('videos');
 
             $table->unsignedBigInteger('tag_id');
             $table->foreign('tag_id')->references('id')->on('tags');
-
-            $table->timestamps();
         });
     }
 

@@ -14,7 +14,8 @@ class CreateVideosTable extends Migration
     public function up()
     {
         Schema::create('videos', function (Blueprint $table) {
-            $table->string('id', 100)->primary();
+            $table->id();
+            $table->string('video_id', 100)->unique();
 
             $table->string('channel_id', 100);
             $table->foreign('channel_id')->references('id')->on('channels');
