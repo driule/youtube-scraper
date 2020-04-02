@@ -10,7 +10,7 @@ use App\Models\Video;
 class YoutubeScraper
 {
     const URI = 'https://www.googleapis.com/youtube/v3/';
-    const MAX_RESULTS = 10;
+    const MAX_RESULTS = 50;
 
     private Channel $channel;
     private Video $video;
@@ -115,20 +115,24 @@ class YoutubeScraper
             }
 
             if (isset($item['snippet']['tags'])) {
-                $this->saveTags($video, $item['snippet']['tags']);
+                $this->saveVideoTags($video, $item['snippet']['tags']);
             }
 
             if (isset($item['statistics'])) {
-                $this->saveStatistics($video->id, $item['statistics']);
+                $this->saveVideoStatistics($video, $item['statistics']);
             }
         }
     }
 
-    private function saveStatistics(string $videoId, array $statistics)
+    /**
+     * @param Video $video
+     * @param array $statistics
+     */
+    private function saveVideoStatistics(Video $video, array $statistics)
     {
         $this->statistic->create(
             [
-                'video_id' => $videoId,
+                'video_id' => $video->id,
                 'views' => $statistics['viewCount'],
                 'likes' => $statistics['likeCount'],
                 'dislikes' => $statistics['dislikeCount'],
@@ -138,7 +142,11 @@ class YoutubeScraper
         );
     }
 
-    private function saveTags(Video $video, array $tags)
+    /**
+     * @param Video $video
+     * @param array $tags
+     */
+    private function saveVideoTags(Video $video, array $tags)
     {
         foreach ($tags as $name) {
             $tag = $this->tag->where('name', $name)->first();
