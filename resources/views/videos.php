@@ -5,25 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Youtube Scraper</title>
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://pagination.js.org/dist/2.1.5/pagination.css">
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://pagination.js.org/dist/2.1.5/pagination.min.js"></script>
+
+    <style>
+        a {
+            color: #333;
+            text-decoration: none;
+            outline: 0;
+        }
+
+        a:hover {
+            color: #808080;
+            text-decoration: none;
+            outline: 0;
+        }
+
+        .container {
+            margin: 5px;
+        }
+
+        .data-container {
+            overflow: auto;
+            margin: 15px 0;
+        }
+
+        .data-container ul {
+            margin: 0;
+            padding-left: 0;
+        }
+
+        .data-container li {
+            background: #EEE;
+            margin-bottom: 3px;
+            padding: 8px;
+            line-height: 1em;
+            list-style: none;
+        }
+
+        input.filter {
+            width: 250px;
+        }
+    </style>
 </head>
 
 <body>
-<div style="margin: 5px;">
+<div class="container">
     <h2>Videos & Statistic</h2>
     <hr>
 
     <div class="ui-widget">
         <label for="tag">Filter: </label>
-        <input type="text" name="tag" id="tag" placeholder="by tag" style="width: 250px">
-        <input type="number" name="performance" id="performance" placeholder="by performance limit" style="width: 250px"
-                title="First hour views after video uploaded divided by channels’ all videos first hour views median">
+        <input class="filter" type="text" name="tag" id="tag" placeholder="by tag">
+        <input class="filter" type="number" name="performance" id="performance" placeholder="by performance limit"
+               title="First hour views after video uploaded divided by channels’ all videos first hour views median">
     </div>
 
-    <div id="video-list"></div>
+    <div id="video-list">
+        <div class="data-container"></div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -37,7 +81,7 @@
                 data: {'tag': tag},
 
                 success: function (data) {
-                    $('#video-list').html(makeVideoList(data));
+                    makeVideoList(data)
                 }
             })
         });
@@ -47,7 +91,7 @@
             type: "GET",
 
             success: function (data) {
-                $('#video-list').html(makeVideoList(data));
+                makeVideoList(data)
             }
         });
 
@@ -68,17 +112,30 @@
         }
 
         function makeVideoList(videos) {
-            let content = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
+            $('#video-list').pagination({
+                dataSource: videos,
+                pageSize: 15,
+
+                callback: function (data, pagination) {
+                    $('.data-container').html(videosTemplate(data));
+                }
+            })
+        }
+
+        function videosTemplate(videos) {
+            let content = '<ul>';
             for (let i = 0; i < videos.length; i++) {
-                content += '<li class="list-group-item">'
-                    + '<a href="https://www.youtube.com/watch?v='
-                    + videos[i]['video_id'] + '" target="_blank">'
-                    + videos[i]['title'] + '</a></li>';
+                content += '<li><a href="https://www.youtube.com/watch?v='
+                    + videos[i]['video_id']
+                    + '" target="_blank">'
+                    + videos[i]['title']
+                    + '</a></li>';
             }
             content += '</ul>';
 
             return content;
         }
+
     });
 </script>
 </body>
