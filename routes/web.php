@@ -20,4 +20,5 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('get-all-videos', 'VideoController@getAll');
+$router->get('get-all-tags', 'VideoController@getAllTags');
 $router->get('search-video-by-tag', 'VideoController@searchByTag');

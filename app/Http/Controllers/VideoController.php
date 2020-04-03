@@ -35,4 +35,19 @@ class VideoController extends Controller
             $this->videoService->findByTag($request->tag)
         ));
     }
+
+    /**
+     * @return JsonResponse
+     */
+    public function getAllTags()
+    {
+        $tags = $this->videoService->getAllTags();
+
+        $plainList = [];
+        foreach ($tags as $tag) {
+            $plainList[] = $tag['name'];
+        }
+
+        return response()->json($plainList);
+    }
 }
