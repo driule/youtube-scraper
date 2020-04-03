@@ -16,7 +16,8 @@
  */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return view('videos');
 });
 
-$router->get('videos', 'VideoController@index');
+$router->get('get-all-videos', 'VideoController@getAll');
+$router->get('search-video-by-tag', 'VideoController@searchByTag');

@@ -2,22 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
+use App\Services\VideoService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class VideoController extends Controller
 {
-    public function __construct()
+    private VideoService $videoService;
+
+    public function __construct(VideoService $videoService)
     {
-        //
+        $this->videoService = $videoService;
     }
 
     /**
-     * @return View
+     * @return JsonResponse
      */
-    public function index()
+    public function getAll()
     {
-        $videos = [];
+        return response()->json(json_decode(
+            $this->videoService->getAll()
+        ));
+    }
 
-        return view('videos')->with(['videos' => $videos]);
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function searchByTag(Request $request)
+    {
+        return response()->json(json_decode(
+            $this->videoService->findByTag($request->tag)
+        ));
     }
 }
