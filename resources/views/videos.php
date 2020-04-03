@@ -17,8 +17,10 @@
     <hr>
 
     <div class="ui-widget">
-        <label for="tag">search: </label>
+        <label for="tag">Filter: </label>
         <input type="text" name="tag" id="tag" placeholder="by tag" style="width: 250px">
+        <input type="number" name="performance" id="performance" placeholder="by performance limit" style="width: 250px"
+                title="First hour views after video uploaded divided by channels’ all videos first hour views median">
     </div>
 
     <div id="video-list"></div>
@@ -68,7 +70,10 @@
         function makeVideoList(videos) {
             let content = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
             for (let i = 0; i < videos.length; i++) {
-                content += '<li class="list-group-item">' + videos[i]['title'] + '</li>';
+                content += '<li class="list-group-item">'
+                    + '<a href="https://www.youtube.com/watch?v='
+                    + videos[i]['video_id'] + '" target="_blank">'
+                    + videos[i]['title'] + '</a></li>';
             }
             content += '</ul>';
 
