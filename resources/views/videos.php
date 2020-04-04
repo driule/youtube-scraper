@@ -50,6 +50,10 @@
         input.filter {
             width: 250px;
         }
+
+        .ui-autocomplete {
+            max-width: 250px;
+        }
     </style>
 </head>
 
@@ -59,14 +63,26 @@
     <hr>
 
     <div class="ui-widget">
-        <label for="tag">Filter: </label>
-        <input class="filter" type="text" name="tag" id="tag" placeholder="by tag">
-        <input class="filter" type="number" name="performance" id="performance" placeholder="by performance limit"
-               title="First hour views after video uploaded divided by channels’ all videos first hour views median">
-    </div>
-
-    <div id="video-list">
-        <div class="data-container"></div>
+        <table>
+            <tr>
+                <td>
+                    <label for="tag"><h4>Filters</h4></label>
+                </td>
+                <td><input class="filter" type="text" name="tag" id="tag" placeholder="by tag"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input class="filter" type="number" name="performance" id="performance" placeholder="by performance limit"
+                           title="First hour views after video uploaded divided by channels’ all videos first hour views median">
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <h4>[performance] Caption</h4>
+        <div id="video-list">
+            <div class="data-container"></div>
+        </div>
     </div>
 </div>
 
@@ -142,7 +158,7 @@
             for (let i = 0; i < videos.length; i++) {
                 content += '<li><a href="https://www.youtube.com/watch?v='
                     + videos[i]['video_id']
-                    + '" target="_blank">'
+                    + '" target="_blank" title=" ' + videos[i]['description'] + ' ">'
                     + '[' + videos[i]['performance'] + '] '
                     + videos[i]['title']
                     + '</a></li>';

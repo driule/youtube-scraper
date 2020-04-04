@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Services\VideoService;
 use App\Services\YoutubeScraper;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,14 +24,12 @@ class ScrapeChannelCommand extends Command {
     protected $description = 'Scrape Youtube channel and save/update video statistics and tags';
 
     private YoutubeScraper $youtubeScraper;
-    private VideoService $videoService;
 
-    public function __construct(YoutubeScraper $youtubeScraper, VideoService $videoService)
+    public function __construct(YoutubeScraper $youtubeScraper)
     {
         parent::__construct();
 
         $this->youtubeScraper = $youtubeScraper;
-        $this->videoService = $videoService;
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -68,9 +65,9 @@ class ScrapeChannelCommand extends Command {
 
         $this->info("Channel has been scraped. Total videos: $totalVideosScraped");
 
-        $this->info("Updating video performance...");
-        $this->videoService->updateVideosPerformance($channelId);
-        $this->info("Task completed.");
+        $this->call(UpdateStatsCommand::class, [
+            'id' => $channelId,
+        ]);
 
         return $totalVideosScraped;
     }
