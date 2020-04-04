@@ -30,14 +30,15 @@ class Kernel extends ConsoleKernel
         // UC03RvJoIhm_fMwlUpm9ZvFw // Crafty Panda's channel
 
         // Irena's channel
-//        $schedule->command('scrape:channel UCibsmRkNNVPDVfCEtvnAtEw')->everyThirtyMinutes();
-//        $schedule->command('scrape:channel UCibsmRkNNVPDVfCEtvnAtEw')->everyMinute();
+        $schedule->command('scrape:channel UCibsmRkNNVPDVfCEtvnAtEw')->everyThirtyMinutes();
+//        $schedule->command('scrape:channel UCibsmRkNNVPDVfCEtvnAtEw')->hourly();
 
         // my channel
-        $schedule->command('scrape:channel UCj-Qwy3Mt69VLshmM6iNy3w')->everyThirtyMinutes();
+//        $schedule->command('scrape:channel UCj-Qwy3Mt69VLshmM6iNy3w')->everyThirtyMinutes();
 //        $schedule->command('scrape:channel UCj-Qwy3Mt69VLshmM6iNy3w')->everyMinute();
 
         // Crafty Panda's channel
-        $schedule->command('scrape:channel UC03RvJoIhm_fMwlUpm9ZvFw')->dailyAt('23:00');
+        $schedule->command('scrape:channel UC03RvJoIhm_fMwlUpm9ZvFw')->everyThirtyMinutes();
+//        $schedule->command('scrape:channel UC03RvJoIhm_fMwlUpm9ZvFw')->hourly();
     }
 }
