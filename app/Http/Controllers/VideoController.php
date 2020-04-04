@@ -37,6 +37,17 @@ class VideoController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function filterByPerformance(Request $request)
+    {
+        return response()->json(json_decode(
+            $this->videoService->filterByPerformance($request->performance)
+        ));
+    }
+
+    /**
      * @return JsonResponse
      */
     public function getAllTags()

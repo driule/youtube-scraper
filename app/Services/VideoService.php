@@ -31,6 +31,15 @@ class VideoService
     }
 
     /**
+     * @param int $performance
+     * @return \Illuminate\Support\Collection
+     */
+    public function filterByPerformance(int $performance)
+    {
+        return $this->video->where('performance', '>=', $performance)->get();
+    }
+
+    /**
      * @return \Illuminate\Support\Collection
      */
     public function getAllTags()

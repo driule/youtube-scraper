@@ -76,7 +76,7 @@
         $('#tag').bind("keyup change paste input", function () {
             let tag = $(this).val();
             $.ajax({
-                url: "search-video-by-tag",
+                url: "search-videos-by-tag",
                 type: "GET",
                 data: {'tag': tag},
 
@@ -84,6 +84,21 @@
                     makeVideoList(data)
                 }
             })
+            $('#performance').val('');
+        });
+
+        $('#performance').bind("keyup change paste input", function () {
+            let performance = $(this).val();
+            $.ajax({
+                url: "filter-videos-by-performance",
+                type: "GET",
+                data: {'performance': performance},
+
+                success: function (data) {
+                    makeVideoList(data)
+                }
+            })
+            $('#tag').val('');
         });
 
         $.ajax({
@@ -128,6 +143,7 @@
                 content += '<li><a href="https://www.youtube.com/watch?v='
                     + videos[i]['video_id']
                     + '" target="_blank">'
+                    + '[' + videos[i]['performance'] + '] '
                     + videos[i]['title']
                     + '</a></li>';
             }
