@@ -14,6 +14,9 @@ class StatisticService
         $this->video = $video;
     }
 
+    /**
+     * @param string $channelId
+     */
     public function updateVideosPerformance(string $channelId)
     {
         $videos = $this->video->where('channel_id', $channelId)->get();
@@ -56,6 +59,10 @@ class StatisticService
         return 0;
     }
 
+    /**
+     * @param $array
+     * @return float|int
+     */
     private function calculateMedian($array)
     {
         if ($array) {
