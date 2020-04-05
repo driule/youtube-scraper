@@ -60,16 +60,16 @@ class StatisticService
     }
 
     /**
-     * @param $array
+     * @param array $numbers
      * @return float|int
      */
-    private function calculateMedian($array)
+    private function calculateMedian(array $numbers)
     {
-        if ($array) {
-            $count = count($array);
-            sort($array);
+        if ($numbers) {
+            $count = count($numbers);
+            sort($numbers);
             $middle = floor(($count - 1) / 2);
-            return ($array[$middle] + $array[$middle + 1 - $count % 2]) / 2;
+            return ($numbers[$middle] + $numbers[$middle + 1 - $count % 2]) / 2;
         }
 
         return 0;
