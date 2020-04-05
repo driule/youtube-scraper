@@ -12,13 +12,18 @@ cd path/to/youtube-scraper
 composer install
 ```
 
+Edit `.env` file
+
 Setup DB
 ```
 php artisan migrate:fresh
 ```
 
-Edit `.env` file
+Add command scheduler to crontab
 
+```
+* * * * * php /path/to/project/public_html/artisan schedule:run >> /dev/null 2>&1
+```
 
 ### Scraping
 
