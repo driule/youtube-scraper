@@ -31,3 +31,8 @@ Update channel videos performance statistic
 ```
 php artisan update:videos-performance UC03RvJoIhm_fMwlUpm9ZvFw
 ```
+
+### Massive Scrapping
+
+Conceptual implementation on how to scrape Youtube channels massivevly can be found in
+[`App\Services\YoutubeScraper::scrapeChannelsMassively()`](https://github.com/driule/youtube-scraper/blob/master/app/Services/YoutubeScraper.php#L161)
