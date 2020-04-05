@@ -159,6 +159,8 @@ class YoutubeScraper
     }
 
     /**
+     * TODO: experimental code
+     *
      * @param string $order {date|rating|relevance|title|videoCount|viewCount }
      *
      * This method allows us to scrape as many channels as API allows
@@ -188,6 +190,8 @@ class YoutubeScraper
     }
 
     /**
+     * TODO: experimental code
+     *
      * @param array $channelsContent
      */
     private function processChannels(array $channelsContent)
@@ -200,6 +204,8 @@ class YoutubeScraper
     }
 
     /**
+     * TODO: experimental code
+     *
      * @param string $order
      * @param string|null $pageToken
      *
