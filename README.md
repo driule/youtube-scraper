@@ -29,5 +29,5 @@ php artisan scrape:channel UC03RvJoIhm_fMwlUpm9ZvFw
 
 Update channel videos performance statistic
 ```
-php artisan aupdate:videos-performance UC03RvJoIhm_fMwlUpm9ZvFw
+php artisan update:videos-performance UC03RvJoIhm_fMwlUpm9ZvFw
 ```
