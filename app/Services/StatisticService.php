@@ -17,7 +17,7 @@ class StatisticService
     /**
      * @param string $channelId
      */
-    public function updateVideosPerformance(string $channelId)
+    public function calculateVideosPerformance(string $channelId)
     {
         $videos = $this->video->where('channel_id', $channelId)->get();
 
@@ -45,7 +45,7 @@ class StatisticService
     {
         $statistics = DB::select(
             DB::raw(
-                "SELECT * FROM statistics WHERE created_at <= DATE_ADD(:extended_date, INTERVAL 1 HOUR) AND video_id = :video_id ORDER BY views"
+                "SELECT views FROM statistics WHERE created_at <= DATE_ADD(:extended_date, INTERVAL 1 HOUR) AND video_id = :video_id ORDER BY views"
             ), array(
                 'extended_date' => $video->created_at,
                 'video_id' => $video->id,
@@ -69,6 +69,7 @@ class StatisticService
             $count = count($numbers);
             sort($numbers);
             $middle = floor(($count - 1) / 2);
+
             return ($numbers[$middle] + $numbers[$middle + 1 - $count % 2]) / 2;
         }
 

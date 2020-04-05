@@ -37,7 +37,7 @@ class UpdateStatsCommand extends Command {
         $this->info("Starting...");
 
         $channelId = $this->argument('id');
-        $this->statisticService->updateVideosPerformance($channelId);
+        $this->statisticService->calculateVideosPerformance($channelId);
         $this->info("Task completed.");
 
         return 0;

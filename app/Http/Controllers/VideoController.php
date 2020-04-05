@@ -21,7 +21,7 @@ class VideoController extends Controller
     public function getAll()
     {
         return response()->json(json_decode(
-            $this->videoService->getAll()
+            $this->videoService->getAllVideos()
         ));
     }
 

@@ -52,7 +52,7 @@ class VideoService
     /**
      * @return \Illuminate\Support\Collection
      */
-    public function getAll()
+    public function getAllVideos()
     {
         return $this->video->orderBy('performance', 'desc')->get();
     }
