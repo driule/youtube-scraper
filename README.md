@@ -2,8 +2,6 @@
 
 ### Lumen + PHP 7.4 + MySQL
 
-Demo: [https://panda.ezoom.dev](https://panda.ezoom.dev)
-
 ### Installing
 
 ```
